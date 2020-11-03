@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useKeyDown } from "../hooks/useKeyDown";
@@ -12,6 +12,7 @@ const items = [
   { id: "cursor", name: "Cursor", cost: 10, value: 1 },
   { id: "grandma", name: "Grandma", cost: 100, value: 10 },
   { id: "farm", name: "Farm", cost: 1000, value: 80 },
+  { id: "megaCursor", name: "Mega Cursor", cost: 800, value: 1 },
 ];
 
 const Game = () => {
@@ -21,7 +22,10 @@ const Game = () => {
     cursor: 0,
     grandma: 0,
     farm: 0,
+    megaCursor: 0,
   });
+
+  console.log(purchasedItems.megaCursor);
 
   // console.log(Object.values(purchasedItems));
   //Calculate the amout of cookies per sec
@@ -58,6 +62,7 @@ const Game = () => {
       ...purchasedItems,
       [value]: purchasedItems[value] + 1,
     });
+    itemToChange.cost += Math.floor(Math.random() * (5 - 2) + 2);
   };
 
   //Show num cookies on tab
@@ -65,7 +70,7 @@ const Game = () => {
 
   //Add to cookies on spacebar
   useKeyDown("Space", () => {
-    setNumCookies(numCookies + 1);
+    setNumCookies(numCookies + 1 + purchasedItems.megaCursor);
   });
 
   return (
@@ -78,7 +83,9 @@ const Game = () => {
         <Button>
           <Cookie
             src={cookieSrc}
-            onClick={() => setNumCookies(numCookies + 1)}
+            onClick={() =>
+              setNumCookies(numCookies + 1 + purchasedItems.megaCursor)
+            }
           />
         </Button>
       </GameArea>
